@@ -1,6 +1,7 @@
 package com.example.fampro.modules.user;
 
 
+import com.example.fampro.modules.user.request.CreateUser;
 import com.example.fampro.modules.vocabulary.Vocabulary;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,16 +20,16 @@ import java.util.Set;
 public class User {
 
     @Column(name = "id")
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO) @Id
     private int id;
 
     @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "lastname")
-    private String lastname;
+    @Column(name = "lastName")
+    private String lastName;
 
-    //@Email
+    @Email //@Id
     private String email;
 
     private Timestamp created;
@@ -42,14 +44,20 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name= "vocabulary_id")})
     private Set<Vocabulary> vocabularies = new HashSet<>();
 
-    public User(String vorname, String nachname) {
+    public User(String vorname, String nachname, String email) {
         this.firstName = vorname;
-        this.lastname = nachname;
+        this.lastName = nachname;
+        this.email = email;
         this.created= new Timestamp(System.currentTimeMillis());
     }
 
     public User() {
+        this.created= new Timestamp(System.currentTimeMillis());
+    }
 
+    public User (CreateUser user){
+        this(user.getFirstName(), user.getLastName(), user.getEmail());
+        this.created= new Timestamp(System.currentTimeMillis());
     }
 
 

@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 public interface VocabularyRepository extends JpaRepository<Vocabulary, Integer> {
-    //List<Vocabulary> findByBenutzer(String benutzer);
+    Vocabulary findById(long id);
 }

@@ -27,8 +27,8 @@ public class FamproApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User hendrik = new User("Hendrik", "Weisgerber");
-        User daniel = new User("Daniel", "Weisgerber");
+        User hendrik = new User("Hendrik", "Weisgerber", "Hendrik@hpe.com");
+        User daniel = new User("Daniel", "Weisgerber","daniel@hoandme.com");
 
         Vocabulary hello = new Vocabulary("hallo","hello");
         Vocabulary world = new Vocabulary("Welt","World");
