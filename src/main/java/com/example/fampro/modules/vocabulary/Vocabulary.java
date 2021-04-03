@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -30,15 +31,21 @@ public class Vocabulary {
 
     private Date created;
 
+    @Email
+    private String ownersEmail;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "vocabularies")
-    private Set<User> users = new HashSet<>();
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "user_id")
+    private User user;
 
 
-    public Vocabulary(String german, String english) {
+
+    public Vocabulary(String german, String english, String email) {
         super();
         this.german = german;
         this.english = english;
+        this.ownersEmail= email;
         this.created= new Date();
     }
 
@@ -49,7 +56,7 @@ public class Vocabulary {
 
 
     public Vocabulary(CreateVocabulary vocabulary){
-        this(vocabulary.getGerman(), vocabulary.getEnglish());
+        this(vocabulary.getGerman(), vocabulary.getEnglish(), vocabulary.getOwnersEmail());
         this.created= new Date();
     }
 }

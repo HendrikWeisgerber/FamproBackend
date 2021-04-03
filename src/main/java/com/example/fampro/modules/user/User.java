@@ -37,11 +37,8 @@ public class User {
 
 
 
-    @JsonIgnore
-    @ManyToMany(fetch= FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable( name = "user_vocabulary",
-            joinColumns ={@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name= "vocabulary_id")})
+
+    @OneToMany(mappedBy = "user")
     private Set<Vocabulary> vocabularies = new HashSet<>();
 
     public User(String vorname, String nachname, String email) {

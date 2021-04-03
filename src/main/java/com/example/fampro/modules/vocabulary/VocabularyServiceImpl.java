@@ -1,6 +1,8 @@
 
 package com.example.fampro.modules.vocabulary;
 
+import com.example.fampro.modules.user.User;
+import com.example.fampro.modules.user.UserRepository;
 import com.example.fampro.modules.vocabulary.request.CreateVocabulary;
 import com.example.fampro.modules.vocabulary.request.UpdateVocabulary;
 import com.example.fampro.utils.exception.VocabularyNotFoundException;
@@ -15,6 +17,9 @@ public class VocabularyServiceImpl implements VocabularyService {
     @Autowired
     VocabularyRepository vocabularyRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @Override
     public List<Vocabulary> getAll(){
@@ -26,9 +31,13 @@ public class VocabularyServiceImpl implements VocabularyService {
 
     @Override
     public Vocabulary add(CreateVocabulary vocabulary){
-        Vocabulary zuSpeicherndeVocabulary = new Vocabulary(vocabulary);
-        vocabularyRepository.save(zuSpeicherndeVocabulary);
-        return zuSpeicherndeVocabulary;
+        Vocabulary addVocab = new Vocabulary(vocabulary);
+        User owner = userRepository.findByEmail(vocabulary.getOwnersEmail());
+
+        addVocab.setUser(owner);
+        owner = userRepository.save(owner);
+        addVocab= vocabularyRepository.save(addVocab);
+        return addVocab;
     }
 
     @Override

@@ -27,28 +27,25 @@ public class FamproApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User hendrik = new User("Hendrik", "Weisgerber", "Hendrik@hpe.com");
+        User hendrik = new User("Hendrik", "Weisgerber", "hendrik@hpe.com");
         User daniel = new User("Daniel", "Weisgerber","daniel@hoandme.com");
 
-        Vocabulary hello = new Vocabulary("hallo","hello");
-        Vocabulary world = new Vocabulary("Welt","World");
+        Vocabulary hello = new Vocabulary("hallo","hello","hendrik@hpe.com");
+        Vocabulary world = new Vocabulary("Welt","World","daniel@hoandme.com");
+
+        hello.setUser(hendrik);
+        world.setUser(daniel);
 
         hendrik.getVocabularies().add(hello);
         hendrik.getVocabularies().add(world);
-        daniel.getVocabularies().add(hello);
 
-        hello.getUsers().add(hendrik);
-        world.getUsers().add(hendrik);
-        hello.getUsers().add(daniel);
+        /*
+        hello=vocabularyRepository.save(hello);
+        world=vocabularyRepository.save(world);
 
-        this.vocabularyRepository.save(hello);
-        this.vocabularyRepository.save(world);
-
-        this.userRepository.save(hendrik);
-        this.userRepository.save(daniel);
-
-
-
+        hendrik=userRepository.save(hendrik);
+        daniel=userRepository.save(daniel);
+         //*/
 
     }
 }
