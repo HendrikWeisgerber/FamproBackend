@@ -12,4 +12,5 @@ public interface UserService {
     User addUser(CreateUser user) throws UserAlreadyExistException;
     User updateUser(UpdateUser user, String email) throws UserNotFoundException;
     void deleteUser(String email) throws UserNotFoundException;
+
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.List;
 
@@ -43,6 +44,12 @@ public class VocabularyController {
     @DeleteMapping
     public void deleteVocabulary(long id){
         vocabularyService.deleteId(id);
+    }
+
+
+    @GetMapping(value="/{email}")
+    public ResponseEntity<List<Vocabulary>> findByUser(@NotNull @PathVariable(name = "email") String email){
+        return ResponseEntity.ok(vocabularyService.findByUser(email));
     }
 
 }

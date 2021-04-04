@@ -5,6 +5,7 @@ import com.example.fampro.modules.user.User;
 import com.example.fampro.modules.user.UserRepository;
 import com.example.fampro.modules.vocabulary.request.CreateVocabulary;
 import com.example.fampro.modules.vocabulary.request.UpdateVocabulary;
+import com.example.fampro.utils.exception.UserNotFoundException;
 import com.example.fampro.utils.exception.VocabularyNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -59,5 +60,15 @@ public class VocabularyServiceImpl implements VocabularyService {
     public void deleteId(long id) throws VocabularyNotFoundException {
         Vocabulary vocabulary = vocabularyRepository.findById(id);
         vocabularyRepository.delete(vocabulary);
+    }
+
+    @Override
+    public List<Vocabulary> findByUser(String email) throws UserNotFoundException {
+        User user = userRepository.findByEmail(email);
+        if (user ==null){
+            throw new UserNotFoundException("No User with that email adress could be found");
+        }
+        List<Vocabulary> usersVocabularys = vocabularyRepository.findByUser(user);
+        return  usersVocabularys;
     }
 }
