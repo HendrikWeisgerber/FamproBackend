@@ -38,10 +38,11 @@ public class User {
 
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL,mappedBy = "user")
     private Set<Vocabulary> vocabularies = new HashSet<>();
 
     public User(String vorname, String nachname, String email) {
+        super();
         this.firstName = vorname;
         this.lastName = nachname;
         this.email = email;

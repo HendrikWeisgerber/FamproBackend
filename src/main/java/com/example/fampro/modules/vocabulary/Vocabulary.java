@@ -4,6 +4,7 @@ package com.example.fampro.modules.vocabulary;
 
 import com.example.fampro.modules.user.User;
 import com.example.fampro.modules.vocabulary.request.CreateVocabulary;
+import com.example.fampro.modules.vocabularyProtocol.Protocol;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -35,9 +36,12 @@ public class Vocabulary {
     private String ownersEmail;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "user_id")
     private User user;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "vocabulary")
+    private Protocol protocol;
 
 
 
